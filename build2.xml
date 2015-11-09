@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MyProject" default="all" >
+
+<target name="make.dirs" description="Make some dirs" depends="clean">
+    <mkdir dir="build"/>
+    <mkdir dir="build/class"/>
+    <mkdir dir="build/bin"/>
+</target>
+
+<target name="compile" description="compile java"  depends="make.dirs">
+    <javac destdir="build/class">
+        <src path="src"/>
+    </javac>
+</target>
+
+<target name="createjar" depends="compile">
+    <jar destfile="build/bin/myjar.jar" >
+        <fileset dir="build/class">
+            <include name="**/*.class"/>
+        </fileset>
+        <manifest>
+            <attribute name="Main-Class" value="my.app.swing.MySwing"/>
+        </manifest>
+    </jar>
+</target>
+
+<target name="all" description="Do the build"  depends="createjar"/>
+
+<target name="clean" description="clean up">
+    <echo>I'm cleaning up.</echo>
+    <delete dir="build"/>
+</target>
+
+</project>
